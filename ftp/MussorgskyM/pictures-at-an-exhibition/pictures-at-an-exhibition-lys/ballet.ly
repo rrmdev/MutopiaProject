@@ -17,8 +17,8 @@
   maintainerEmail    = "knute (at) snortum (dot) net"
   maintainerWeb      = "http://www.musicwithknute.com/"
 
- footer = "Mutopia-2014/07/19-475"
- copyright =  \markup { \override #'(baseline-skip . 0 ) \right-column { \sans \bold \with-url #"http://www.MutopiaProject.org" { \abs-fontsize #9  "Mutopia " \concat { \abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project " } } } \override #'(baseline-skip . 0 ) \center-column { \abs-fontsize #12 \with-color #grey \bold { \char ##x01C0 \char ##x01C0 } } \override #'(baseline-skip . 0 ) \column { \abs-fontsize #8 \sans \concat { " Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " " 2014 " by " \maintainer " " \char ##x2014 " " \footer } \concat { \concat { \abs-fontsize #8 \sans{ " " \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License " \char ##x2014 " free to distribute, modify, and perform" } } \abs-fontsize #13 \with-color #white \char ##x01C0 } } }
+ footer = "Mutopia-2016/12/31-475"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2016 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
  tagline = ##f
 }
 
@@ -67,7 +67,7 @@ highVoice = \relative c''' {
   | \acciaccatura { d8 } <f, a c>8 [ \staffDown <f, a c> \staffUp
     \acciaccatura { c''8 } <f, af b> \staffDown <f, af df> ] \staffUp
   | \acciaccatura { d''8 } <f, a c>8 \staffDown <f, a c> \staffUp
-    <df' f af> [ \acciaccatura { d'8 } <f, a c> ]
+    \acciaccatura { c''8 } <f, af b> \acciaccatura { d'8 } <f, a c>
   | \acciaccatura { d'8 } <f, a c>8 [ \staffDown <f, a c> \staffUp
     \acciaccatura { c''8 } <f, af b> \staffDown <f, af df> ] \staffUp
   | \acciaccatura { d''8 } <f, a c>8 [ \staffDown <f, a c> \staffUp
@@ -134,7 +134,7 @@ lowVoice = \relative c'' {
   \barNumberCheck #8
   | d [ ef e c ]
   | s2
-  | s4 <af b>8 r
+  | s4 <af df>8 r
   | s2 * 2
   | df,8 [ ef e f ]
   | gf8 [ af a bf ]
@@ -143,7 +143,7 @@ lowVoice = \relative c'' {
   \barNumberCheck #16
   | af8 [ bf b c ]
   | c,8 [ e df f ]
-  | d [ fs e g ]
+  | ds [ fs e g ]
   | f [ a gf bf ]
   << { af [ b bf ( c  ] 
        \oneVoice
@@ -202,6 +202,17 @@ highVoiceTwo = \relative c''' {
   | b2 \startTrillSpan ^\markup { \sharp }
   | a2 \startTrillSpan ^\markup { \natural }
   | f2 \startTrillSpan \break
+}
+
+highVoiceTwoMidi = \relative c''' {
+  | \tuplet 3/2 { \repeat unfold 6 { f16 g } }
+  | \tuplet 3/2 { \repeat unfold 6 { d16 e } }
+  | \tuplet 3/2 { \repeat unfold 3 { c16 d } \repeat unfold 3 { d16 e } }
+  | \tuplet 3/2 { \repeat unfold 3 { c16 d } \repeat unfold 3 { b16 cs } }
+  | \tuplet 3/2 { \repeat unfold 6 { c16 d } }
+  | \tuplet 3/2 { \repeat unfold 6 { b16 cs } }
+  | \tuplet 3/2 { \repeat unfold 6 { a16 b } }
+  | \tuplet 3/2 { \repeat unfold 6 { f16 g } }
 }
 
 upperMiddleTwo = \relative c''' {
@@ -393,7 +404,7 @@ globalMidi = {
       \repeat unfold 2 { \highVoiceMidi }
       \repeat unfold 2 {
         <<
-          \new Voice { \voiceOne \highVoiceTwo }
+          \new Voice { \voiceOne \highVoiceTwoMidi }
           \new Voice { \voiceTwo \upperMiddleTwo }
         >>
       }

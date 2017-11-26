@@ -3,23 +3,30 @@
 	date = "1690"
 	enteredby = "Peter Chubb"
 	metre = "88 . 88"
-	meter = \metre
 	title = "Winchester New"
 
 	arranger = "W. H. Monk (1823--1889)"
-	mutopiaarranger=\arranger
-	mutopiacomposer="Anonymous"
-	maintainer = \enteredby
-	mutopiaEmail= "mutopia@chubb.wattle.id.au"
 	style = "Hymn"
-	copyright="Public Domain"
-	lastupdated="2005/Jan/9"
+	license = "Public Domain"
 
-	footer = "Mutopia-2005/01/18-197"
-	tagline = "\\raisebox{10mm}{\\parbox{188mm}{\\quad\\small\\noindent " + \footer + " \\hspace{\\stretch{1}} This music is part of the Mutopia project: \\hspace{\\stretch{1}} \\texttt{http://www.MutopiaProject.org/}\\\\ \\makebox[188mm][c]{It has been typeset and placed in the public domain by " + \maintainer + ".} \\makebox[188mm][c]{Unrestricted modification and redistribution is permitted and encouraged---copy this music and share it!}}}"
+	mutopiaarranger = "W. H. Monk (1823-1889)"
+	mutopiacomposer = "Anonymous"
+	mutopiainstrument = "Voice (SATB)"
+	mutopiameter = "88 . 88"
+	mutopiasource = "Unknown"
+	maintainer = "Peter Chubb"
+	maintainerEmail = "mutopia@chubb.wattle.id.au"
+
+ footer = "Mutopia-2016/11/01-197"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { "Placed in the " \with-url #"http://creativecommons.org/licenses/publicdomain" "public domain " "by the typesetter " \char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
+ tagline = ##f
 }
 
 % $Log: WinchesterNew.ly,v $
+%
+% Revision 1.5  2016/10/19           Javier Ruiz-Alma
+% Updated to LilyPond v2.18.2, adjust spacing
+%
 % Revision 1.4  2005/01/11 08:33:37  peterc
 % Discard obsolete american-style chords.
 %
@@ -29,7 +36,15 @@
 % Revision 1.2  2002/02/27 03:11:52  peterc
 % Added mutopia headers.
 %
-\version "2.4.0"
+\version "2.18.2"
+
+\paper {
+    top-margin = 12\mm
+    line-width = 19\cm
+    indent = 0.0\mm
+    system-system-spacing #'padding = #8
+    markup-system-spacing #'basic-distance = #22
+}
 
 global={
 	\key bes \major
@@ -163,15 +178,17 @@ music= <<
 \score{
 	 \music
 	\layout{
-		indent = 0.0	
 		\context {
 			\ChordNames
-		 \override ChordName #'style = #'american
-%		 \override ChordName #'word-space = #1
+		 \override ChordName.style = #'american
+%		 \override ChordName.word-space = #1
 		}
 	}
-	\midi {
-		\tempo 4=100
-	}
+	
+  \midi {
+    \tempo 4 = 100
+    }
+
+
 }
 

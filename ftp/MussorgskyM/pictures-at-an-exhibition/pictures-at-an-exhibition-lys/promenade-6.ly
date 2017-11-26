@@ -18,8 +18,8 @@
   maintainerEmail    = "knute (at) snortum (dot) net"
   maintainerWeb      = "http://www.musicwithknute.com/"
 
- footer = "Mutopia-2014/07/19-475"
- copyright =  \markup { \override #'(baseline-skip . 0 ) \right-column { \sans \bold \with-url #"http://www.MutopiaProject.org" { \abs-fontsize #9  "Mutopia " \concat { \abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project " } } } \override #'(baseline-skip . 0 ) \center-column { \abs-fontsize #12 \with-color #grey \bold { \char ##x01C0 \char ##x01C0 } } \override #'(baseline-skip . 0 ) \column { \abs-fontsize #8 \sans \concat { " Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " " 2014 " by " \maintainer " " \char ##x2014 " " \footer } \concat { \concat { \abs-fontsize #8 \sans{ " " \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License " \char ##x2014 " free to distribute, modify, and perform" } } \abs-fontsize #13 \with-color #white \char ##x01C0 } } }
+ footer = "Mutopia-2016/12/31-475"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2016 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
  tagline = ##f
 }
 
@@ -87,7 +87,8 @@ upper = \relative c''' {
       alignAboveContext = "up"
     } {
       \key b \minor
-      | \repeat tremolo 24 { fs'32 ^\tranq fs, } 
+      | \tag #'layout { \repeat tremolo 24 { fs'32 ^\tranq fs, } }
+        \tag #'midi   { \repeat tremolo 24 { fs'32 \pp     fs, } }
       | \repeat tremolo 24 { fs'32 fs, } 
       | \repeat tremolo 24 { fs'32 fs, }
       | \repeat tremolo 24 { fs'32 fs, } 
@@ -182,14 +183,18 @@ lower = \relative c'' {
     \\
     { <d, a' bs>1. _\cantabileMarcato | <fs as>4 }
   >>
-    fs,4-. ( \sustainOn cs'-. fs-. as-. cs-. ) 
+    fs,4-. ( \sustainOn cs'-. fs-. as-. 
+    \tag #'layout { cs-. ) }
+    \tag #'midi   { cs-. ) \sustainOff }
   |
   <<
     { | e2. ( css2 bs4 | cs4 ) }
     \\
     { <d, a' bs>1. | <fs as>4 }
   >>
-    fs,4-. ( \sustainOn cs'-. fs-. as-. cs-. ) 
+    fs,4-. ( \sustainOn cs'-. fs-. as-. 
+    \tag #'layout { cs-. ) }
+    \tag #'midi   { cs-. ) \sustainOff } 
   |
   << 
     { ds2. ( ^\perden gss,2 as4) | <fs as cs>2. ~ \ppp q2 r4 }
@@ -221,6 +226,7 @@ global = {
     subtitle = "[Promenade-6] Con mortius in lingua mortua"
   }
   \score {
+    \keepWithTag #'layout
     \new PianoStaff <<
       \new Staff = "up" \with { \remove Time_signature_engraver } {
         \global
@@ -233,8 +239,25 @@ global = {
     >>
     \layout {
     }
-    \midi {
-      \tempo 4 = 76
-    }
+  }
+}
+
+% MIDI output only
+\score {
+  \keepWithTag #'midi
+  \unfoldRepeats {
+    \new PianoStaff <<
+      \new Staff = "up" \with { \remove Time_signature_engraver } {
+        \global
+        \upper
+      }
+      \new Staff = "down" \with { \remove Time_signature_engraver } {
+        \global
+        \lower
+      }
+    >>
+  }
+  \midi {
+    \tempo 4 = 76
   }
 }

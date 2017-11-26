@@ -1,7 +1,7 @@
-\version "2.16.1"
+\version "2.19.49"
 
 \header {
-  title = "Caprice No. 5"
+  title = "Six Caprices"
   source = "Mainz: B. Schott's Söhne"
   % Statens musikbibliotek - The Music Library of Sweden
   % Boije 91
@@ -10,21 +10,29 @@
   year = "ca. 1827"
   mutopiacomposer = "CarcassiM"
   mutopiainstrument = "Guitar"
+  mutopiatitle = "Six Caprices, No. 5"
   style = "Classical"
-  copyright = "Creative Commons Attribution-ShareAlike 3.0"
+  license = "Creative Commons Attribution-ShareAlike 3.0"
   maintainer = "Glen Larsen"
   maintainerEmail = "glenl.glx at gmail.com"
- footer = "Mutopia-2013/03/10-1840"
- tagline = \markup { \override #'(box-padding . 1.0) \override #'(baseline-skip . 2.7) \box \center-column { \small \line { Sheet music from \with-url #"http://www.MutopiaProject.org" \line { \concat { \teeny www. \normalsize MutopiaProject \teeny .org } \hspace #0.5 } • \hspace #0.5 \italic Free to download, with the \italic freedom to distribute, modify and perform. } \line { \small \line { Typeset using \with-url #"http://www.LilyPond.org" \line { \concat { \teeny www. \normalsize LilyPond \teeny .org }} by \concat { \maintainer . } \hspace #0.5 Copyright © 2013. \hspace #0.5 Reference: \footer } } \line { \teeny \line { Licensed under the Creative Commons Attribution-ShareAlike 3.0 (Unported) License, for details \concat { see: \hspace #0.3 \with-url #"http://creativecommons.org/licenses/by-sa/3.0" http://creativecommons.org/licenses/by-sa/3.0 } } } } }
+
+ footer = "Mutopia-2017/01/16-1840"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2017 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/3.0/" "Creative Commons Attribution ShareAlike 3.0 (Unported) License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
+ tagline = ##f
 }
 
 \paper {
   line-width = 18.0\cm
-  markup-system-spacing #'padding = #2
+  top-margin = 4\mm                              %-minimum: 8 mm
+  top-markup-spacing.basic-distance = #6         %-dist. from bottom of top margin to the first markup/title
+  markup-system-spacing.basic-distance = #10     %-dist. from header/title to first system
+  top-system-spacing.basic-distance = #12        %-dist. from top margin to system in pages with no titles
+  last-bottom-spacing.padding = #2               %-min #1.5 -pads music from copyright block 
 }
 
-%% Syntax: \bbarre #"text" { notes } - text = any number of box
-bbarre =
+
+%% Syntax: \barre #"text" { notes } - text = any number of box
+barre =
 #(define-music-function (barre location str music) (string? ly:music?)
    (let ((elts (extract-named-music music '(NoteEvent EventChord))))
      (if (pair? elts)
@@ -37,12 +45,12 @@ bbarre =
                  (cons (make-music 'TextSpanEvent 'span-direction 1)
                        (ly:music-property last-element 'articulations))))))
    #{
-       \once \override TextSpanner #'font-size = #-2
-       \once \override TextSpanner #'font-shape = #'upright
-       \once \override TextSpanner #'staff-padding = #3
-       \once \override TextSpanner #'style = #'line
-       \once \override TextSpanner #'to-barline = ##f
-       \once \override TextSpanner #'bound-details =
+       \once \override TextSpanner.font-size = #-2
+       \once \override TextSpanner.font-shape = #'upright
+       \once \override TextSpanner.staff-padding = #3
+       \once \override TextSpanner.style = #'line
+       \once \override TextSpanner.to-barline = ##f
+       \once \override TextSpanner.bound-details =
             #`((left
                 (text . ,#{ \markup { \draw-line #'( 0 . -.5) } #})
                 (Y . 0)
@@ -54,13 +62,13 @@ bbarre =
                 (padding . 0.25)
                 (attach-dir . 2)))
        %% uncomment this line for make full barred
-       \once  \override TextSpanner #'bound-details #'left #'text =  \markup { "B" #str " "}
+       \once  \override TextSpanner.bound-details.left.text =  \markup { #str " "}
        $music
    #})
 
 commonVar = {
-  \override Score.RehearsalMark #'break-align-symbols = #'(key-signature)
-  \override TextSpanner #'staff-padding = #6
+  \override Score.RehearsalMark.break-align-symbols = #'(key-signature)
+  \override TextSpanner.staff-padding = #6
   \mergeDifferentlyHeadedOn
   \mergeDifferentlyDottedOn
 }
@@ -68,19 +76,19 @@ commonVar = {
 \layout {
   \context {
     \Voice
-    \override StringNumber #'stencil = ##f
+    \override StringNumber.stencil = ##f
   }
 }
 
 
 upperVoice = \relative c' {
   \voiceOne
-  \mark Allegro
+  \tempo Allegro
   <a d fis>8\sf d,16 d' fis, d' a d g, d' fis, d' e, d' d, d' |
   <a e'>8 a,16 e'' cis, e' e, e' d, e' cis, e' b, e' a, e' |
   d,16\f d'-3 fis-2 d b,-1 d' fis d e, d'-3 gis-4 d e,, d'' gis d |
   \set minimumFret=5
-  \bbarre #"V " { a,16 cis' a' cis, e, a' cis,, a''} \set minimumFret=0 a,,4 r |
+  \barre #"V " { a,16 cis' a' cis, e, a' cis,, a''} \set minimumFret=0 a,,4 r |
 
   <a' cis g'>8\sf a,16 g'' cis,, g'' e, g' d, g' cis,, g'' b,, g'' a,, g'' |
 
@@ -157,7 +165,7 @@ upperVoice = \relative c' {
   <d fis d'>4. r16 q q4 q |
   q2^\fermata b\rest |
 
-  \bar "||"
+  \bar "|."
 }
 
 lowerVoice = \relative c {
@@ -229,7 +237,7 @@ lowerVoice = \relative c {
   d8 d fis a g fis e d |
   cis8 a cis e d cis b a |
   \textSpannerDown
-  \override TextSpanner #'(bound-details left text) = #"Pouce "
+  \override TextSpanner.bound-details.left.text = #"Pouce "
   d4 fis,\startTextSpan g gis\stopTextSpan |
 
   a4 a' a, a' |
@@ -247,6 +255,7 @@ lowerVoice = \relative c {
   <<
     \new Staff = "Guitar" \with {
       midiInstrument = #"acoustic guitar (nylon)"
+      instrumentName = #"Nº 5"
     } <<
       \commonVar
       \clef "treble_8"
@@ -254,6 +263,7 @@ lowerVoice = \relative c {
       \context Voice = "upperVoice" \upperVoice
       \context Voice = "lowerVoice" \lowerVoice
     >>
+%{
     \new TabStaff = "guitar tab" \with {
       restrainOpenStrings = ##t
     }
@@ -262,7 +272,6 @@ lowerVoice = \relative c {
       \context TabVoice = "upperVoice" \upperVoice
       \context TabVoice = "lowerVoice" \lowerVoice
     >>
-%{
 %}
   >>
   \layout {}

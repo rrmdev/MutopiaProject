@@ -1,4 +1,4 @@
-\version "2.12.02"
+\version "2.19.32"
 
 \header {
    mutopiatitle = "Vater unser im Himmelreich"
@@ -8,17 +8,17 @@
    date = "1739"
    source = "Edition Peters 8660"
    style = "Baroque"
-   copyright = "Creative Commons Attribution-ShareAlike 3.0"
+   license = "Creative Commons Attribution-ShareAlike 4.0"
    maintainer = "Urs Metzger"
    maintainerEmail = "urs@ursmetzger.de"
-   lastupdated = "2009/Feb/09"
 
    title = "Vater unser im Himmelreich"
    subtitle = "Manualiter"
    composer = "Johann Sebastian Bach"
    opus = "BWV 683"
- footer = "Mutopia-2009/02/10-1626"
- tagline = \markup { \override #'(box-padding . 1.0) \override #'(baseline-skip . 2.7) \box \center-column { \small \line { Sheet music from \with-url #"http://www.MutopiaProject.org" \line { \teeny www. \hspace #-1.0 MutopiaProject \hspace #-1.0 \teeny .org \hspace #0.5 } • \hspace #0.5 \italic Free to download, with the \italic freedom to distribute, modify and perform. } \line { \small \line { Typeset using \with-url #"http://www.LilyPond.org" \line { \teeny www. \hspace #-1.0 LilyPond \hspace #-1.0 \teeny .org } by \maintainer \hspace #-1.0 . \hspace #0.5 Copyright © 2009. \hspace #0.5 Reference: \footer } } \line { \teeny \line { Licensed under the Creative Commons Attribution-ShareAlike 3.0 (Unported) License, for details see: \hspace #-0.5 \with-url #"http://creativecommons.org/licenses/by-sa/3.0" http://creativecommons.org/licenses/by-sa/3.0 } } } }
+ footer = "Mutopia-2016/02/17-1626"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2016 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
+ tagline = ##f
 }
 
 \include "deutsch.ly"
@@ -26,8 +26,8 @@
 global = {
    \key d \dorian
    \time 6/8
-   #(set-accidental-style 'default)
-   \override Score.MetronomeMark #'transparent = ##t
+   \accidentalStyle default
+   \override Score.MetronomeMark.transparent = ##t
 }
 
 \paper {
@@ -44,7 +44,8 @@ up       = { \change Staff = "right" \halsdown }
 down     = { \change Staff = "left" \halsup }
 
 sopran = {
-   \new Voice \relative a' {
+   \new Voice = "soprano" \relative a' {
+      \voiceOne
       \global
       \halsup
       \partial 4. a4.
@@ -62,12 +63,12 @@ sopran = {
       f4. e
       d4. cis
       d4 d8\rest d4.
-      e4. \once \override Dots #'extra-offset = #'( -0.55 . 0 ) d
-      \once \override NoteColumn #'force-hshift = #-0.5 \once \override Dots #'extra-offset = #'( -2.1 . 0 ) c4.
-         \once \override NoteColumn #'force-hshift = #-0.5 \once \override Dots #'extra-offset = #'( -1.3 . 0 ) h
+      e4. \once \override Dots.extra-offset = #'( -0.55 . 0 ) d
+      \once \override NoteColumn.force-hshift = #-0.5 \once \override Dots.extra-offset = #'( -2.1 . 0 ) c4.
+         \once \override NoteColumn.force-hshift = #-0.5 \once \override Dots.extra-offset = #'( -1.3 . 0 ) h
       %% Takt 15 ==================================================
-      \once \override NoteColumn #'force-hshift = #-0.5 \once \override Dots #'extra-offset = #'( -1.3 . 0 ) a4.
-         \once \override Dots #'extra-offset = #'( -2.6 . 0 )h
+      \once \override NoteColumn.force-hshift = #-0.5 \once \override Dots.extra-offset = #'( -1.3 . 0 ) a4.
+         \once \override Dots.extra-offset = #'( -2.6 . 0 )h
       a4 d8\rest d4.
       c4. h
       c4. a
@@ -83,7 +84,8 @@ sopran = {
 }
 
 alt = {
-   \new Voice \relative a {
+   \new Voice = "alto" \relative a {
+      \voiceTwo
       \global
       \halsdown
       \partial 4. c4.\rest
@@ -99,12 +101,12 @@ alt = {
       g'16\rest b a g f e d8 f a~
       %% Takt 10 ==================================================
       a8 a d~ d cis16 h! cis8
-      \once \override Staff.NoteCollision #'merge-differently-dotted = ##t d8 f, b~ b a \shiftOn g
+      \once \override Staff.NoteCollision.merge-differently-dotted = ##t d8 f, b~ b a \shiftOn g
       a4 g8\rest e4.\rest
-      h'16\rest d c! h a g \halsup \once \override Beam #'positions = #'( 0.9 . 2.3 ) fis8 gis \tieDown h~
+      h'16\rest d c! h a g \halsup \once \override Beam.positions = #'( 0.9 . 2.3 ) fis8 gis \tieDown h~
       h16 h a g! f! e d8 e f!
       %% Takt 15 ==================================================
-      e8 a16 gis a8~ \once \override NoteColumn #'force-hshift = #1.5 a gis!4
+      e8 a16 gis a8~ \once \override NoteColumn.force-hshift = #1.5 a gis!4
       e4 \halsdown g8\rest e4.\rest
       g16\rest h a g! f e d8 e f
       g8 e c~ c f e f4.~ f8 e16 d e8
@@ -118,7 +120,8 @@ alt = {
 }
 
 tenor = {
-   \new Voice \relative a {
+   \new Voice = "tenor" \relative a {
+      \voiceThree
       \global
       \halsup
       \partial 4. a4.\rest
@@ -127,7 +130,7 @@ tenor = {
       d4 a'8 b g a
       f4 a8\rest c4.\rest
       %% Takt 5 ===================================================
-      \once \override MultiMeasureRest #'staff-position = #6 R2.
+      \once \override MultiMeasureRest.staff-position = #6 R2.
       e16\rest d c b a g f4 e8
       d16 f g a h! cis d a g f e d
       e4 f8\rest \up f16\rest f' e d \down c! h!
@@ -141,7 +144,7 @@ tenor = {
       %% Takt 15 ==================================================
       e16\rest d c h a g! f \up f' e d c h
       c4 c8\rest \down c4.\rest
-      \once \override MultiMeasureRest #'staff-position = #6 R2.
+      \once \override MultiMeasureRest.staff-position = #6 R2.
       e16\rest d c b a g f4 a8\rest
       c16\rest f, g a b c d8 c b
       %% Takt 20 ==================================================
@@ -154,11 +157,12 @@ tenor = {
 }
 
 bass = {
-   \new Voice \relative h, {
+   \new Voice ="bass" \relative h, {
+      \voiceFour
       \global
       \halsdown
       \partial 4. h4.\rest
-      \once \override MultiMeasureRest #'extra-offset = #'( 0 . -1 ) R2.
+      \once \override MultiMeasureRest.extra-offset = #'( 0 . -1 ) R2.
       g4.\rest a4.~
       a16 c! b a g f g8 e a
       d,16 a' h! cis d e f g f e d cis!
@@ -172,7 +176,7 @@ bass = {
       d16 e d c! b a g8 g\rest g\rest
       gis8 g\rest g\rest h16\rest a h! cis! d e
       fis16 g fis e d c! h!4.
-      \once \override Staff.NoteCollision #'merge-differently-dotted = ##t c4.~ c16 d c h a gis
+      \once \override Staff.NoteCollision.merge-differently-dotted = ##t c4.~ c16 d c h a gis
       a8 e' a~ a16 a gis fis e d
       %% Takt 15 ==================================================
       c4 f!8 d e4
@@ -226,9 +230,20 @@ left = {
    }
 
    \midi {
-      \context {
-         \Score
-         tempoWholesPerMinute = #(ly:make-moment 124 8)
-      }
+      \tempo 8 = 124
    }
 }
+
+
+
+%{
+convert-ly.py (GNU LilyPond) 2.19.35  convert-ly.py: Processing `'...
+Applying conversion: 2.12.3, 2.13.0, 2.13.1, 2.13.4, 2.13.10, 2.13.16,
+2.13.18, 2.13.20, 2.13.27, 2.13.29, 2.13.31, 2.13.36, 2.13.39,
+2.13.40, 2.13.42, 2.13.44, 2.13.46, 2.13.48, 2.13.51, 2.14.0, 2.15.7,
+2.15.9, 2.15.10, 2.15.16, 2.15.17, 2.15.18, 2.15.19, 2.15.20, 2.15.25,
+2.15.32, 2.15.39, 2.15.40, 2.15.42, 2.15.43, 2.16.0, 2.17.0, 2.17.4,
+2.17.5, 2.17.6, 2.17.11, 2.17.14, 2.17.15, 2.17.18, 2.17.19, 2.17.20,
+2.17.25, 2.17.27, 2.17.29, 2.17.97, 2.18.0, 2.19.2, 2.19.7, 2.19.11,
+2.19.16, 2.19.22, 2.19.24, 2.19.28, 2.19.29, 2.19.32
+%}

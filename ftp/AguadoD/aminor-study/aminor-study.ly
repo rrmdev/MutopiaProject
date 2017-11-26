@@ -3,7 +3,8 @@
 \header {
   title = "Study in A Minor"
   subtitle = "An Exercise from Nuevo Metodo para Guittare"
-  source = "Statens musikbibliotek - The Music Library of Sweden"
+  source = "Schonenberger, Paris. Plate S. 1320" %"Statens musikbibliotek - The Music Library of Sweden"
+  date = "ca. 1846"
   composer = "Dionisio Aguado"
   piece = "Section 2, Exercise No. 10"
   mutopiacomposer = "AguadoD"
@@ -12,10 +13,10 @@
   license = "Creative Commons Attribution-ShareAlike 3.0"
   maintainer = "Glen Larsen"
   maintainerEmail = "glenl.glx at gmail dot com"
-  moreInfo = "This is a very good first position warmup exercise for a beginner. Unlike many exercises it is lyrical and fun to play. The fingerings in the piece are from Aguado."
+  moreInfo = "This is a very good first position warmup exercise for a beginner. Unlike many exercises it is lyrical and fun to play. The fingerings in the piece are from Aguado (with one correction to measure 15; see lilypond source notes). Devin Ulibarri found this piece at http://carkiv.musikverk.se/www/boije/Boije_0018.pdf on page 60."
 
- footer = "Mutopia-2015/01/25-1833"
- copyright =  \markup { \override #'(baseline-skip . 0 ) \right-column { \sans \bold \with-url #"http://www.MutopiaProject.org" { \abs-fontsize #9  "Mutopia " \concat { \abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project " } } } \override #'(baseline-skip . 0 ) \center-column { \abs-fontsize #11.9 \with-color #grey \bold { \char ##x01C0 \char ##x01C0 } } \override #'(baseline-skip . 0 ) \column { \abs-fontsize #8 \sans \concat { " Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " " 2015 " by " \maintainer " " \char ##x2014 " " \footer } \concat { \concat { \abs-fontsize #8 \sans { " " \with-url #"http://creativecommons.org/licenses/by-sa/3.0/" "Creative Commons Attribution ShareAlike 3.0 (Unported) License " \char ##x2014 " free to distribute, modify, and perform" } } \abs-fontsize #13 \with-color #white \char ##x01C0 } } }
+ footer = "Mutopia-2016/07/18-1833"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2016 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/3.0/" "Creative Commons Attribution ShareAlike 3.0 (Unported) License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
  tagline = ##f
 }
 
@@ -39,7 +40,7 @@ upperVoice = \relative c' {
   \set restrainOpenStrings = ##t
   \repeat volta 2 {
     a,16 c' e c a c e c b-4\3 d e d gis, b e b |
-    a c e c a, c' e c a c e c c-3\3 e-4\2 e e-0\2 |
+    a c e c a, c' e c a c e c c-3\3 e-4\2 e-0 e\2 |
     b-3\3 d e d e,-1 d' e d gis, b e b e, d' e d |
     a-3 c e c e,-2 c' e c c,-4 c' e c e, c' e c |
     a, c' e c a c e c b\3 d e d gis, b e b |
@@ -53,9 +54,9 @@ upperVoice = \relative c' {
     c-3\3 e-4\2 \override StringNumber.transparent = ##t e-0 e\2 b-3\3 d e d b-3\3 d e d a c e c |
     \revert StringNumber.transparent
     gis b e b e, b' e b e,,4  s4 |
-    gis'16 c e c e, b' e b e,, b'' e b \once\set minimumFret=4 b d e d |
+    gis'16 b e b e, b' e b e,, b'' e b \once\set minimumFret=4 b d e d |
     a-3 c e c e, c' e c a, a' c a c, a' c a |
-    d,-4\4 a' b a f a b a e gis b gis e, gis' d'-4 gis, |
+    d,-0\4 a' b a f a b a e gis b gis e, gis' d'-4\5 %{ The original has a "4" indicated for the string, but that is illogical because there is also a fingering of "4" indicated. Either this is an open D string, or the 5th fret of the A string performed with the 4th finger%} gis, |
     a, a' c a e a c a a,4 r4 |
   }
 }

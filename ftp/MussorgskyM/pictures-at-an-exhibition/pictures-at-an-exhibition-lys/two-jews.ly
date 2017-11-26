@@ -17,8 +17,8 @@
   maintainerEmail    = "knute (at) snortum (dot) net"
   maintainerWeb      = "http://www.musicwithknute.com/"
 
- footer = "Mutopia-2014/07/19-475"
- copyright =  \markup { \override #'(baseline-skip . 0 ) \right-column { \sans \bold \with-url #"http://www.MutopiaProject.org" { \abs-fontsize #9  "Mutopia " \concat { \abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project " } } } \override #'(baseline-skip . 0 ) \center-column { \abs-fontsize #12 \with-color #grey \bold { \char ##x01C0 \char ##x01C0 } } \override #'(baseline-skip . 0 ) \column { \abs-fontsize #8 \sans \concat { " Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " " 2014 " by " \maintainer " " \char ##x2014 " " \footer } \concat { \concat { \abs-fontsize #8 \sans{ " " \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License " \char ##x2014 " free to distribute, modify, and perform" } } \abs-fontsize #13 \with-color #white \char ##x01C0 } } }
+ footer = "Mutopia-2016/12/31-475"
+ copyright = \markup {\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0) \right-column {\with-url #"http://www.MutopiaProject.org" {\abs-fontsize #9  "Mutopia " \concat {\abs-fontsize #12 \with-color #white \char ##x01C0 \abs-fontsize #9 "Project "}}}\override #'(font-name . "DejaVu Sans, Bold") \override #'(baseline-skip . 0 ) \center-column {\abs-fontsize #11.9 \with-color #grey \bold {\char ##x01C0 \char ##x01C0 }}\override #'(font-name . "DejaVu Sans,sans-serif") \override #'(baseline-skip . 0) \column { \abs-fontsize #8 \concat {"Typeset using " \with-url #"http://www.lilypond.org" "LilyPond " \char ##x00A9 " 2016 " "by " \maintainer " " \char ##x2014 " " \footer}\concat {\concat {\abs-fontsize #8 { \with-url #"http://creativecommons.org/licenses/by-sa/4.0/" "Creative Commons Attribution ShareAlike 4.0 International License "\char ##x2014 " free to distribute, modify, and perform" }}\abs-fontsize #13 \with-color #white \char ##x01C0 }}}
  tagline = ##f
 }
 
@@ -180,16 +180,24 @@ lowerMiddle = \relative c'' {
   \barNumberCheck #8
   \time 4/4
   | s1
-  | <gf bff>2 <ff af>4 <cff ef>
-  | <ff af>4 <df ff>2 \sustainOn ~ q8 r
-  | <gf bff>2 <ff af>4 <cff ef>
-  | <ff af>4 <df ff>2 \sustainOn ~ q8 r
+  | <gf bff>2 <ff af>4 <eff gf>
+  | <ff af>4 <df ff>2 \sustainOn ~ q8 
+    \tag #'layout { r }
+    \tag #'midi { r \sustainOff }
+  | <gf bff>2 <ff af>4 <eff gf>
+  | <ff af>4 <df ff>2 \sustainOn ~ q8 
+    \tag #'layout { r }
+    \tag #'midi { r \sustainOff }  
   | <eff gf>2 <df ff>4 <cf eff>
-  | <eff gf>4 <bff df>2 \sustainOn ~ q8 r
+  | <eff gf>4 <bff df>2 \sustainOn ~ q8 
+    \tag #'layout { r }
+    \tag #'midi { r \sustainOff }  
   | <eff gf>2 <df ff>4 <cf eff>
   
   \barNumberCheck #16
-  | <eff gf>4 <bff df>2 \sustainOn ~ q8 s
+  | <eff gf>4 <bff df>2 \sustainOn ~ q8 
+    \tag #'layout { s }
+    \tag #'midi { s \sustainOff }  
   | s1 * 9
   | f4 gf f ~ f8 r
   | f4 gf f ~ f8 r
@@ -254,6 +262,7 @@ global = {
     subtitle = "No. 6 Deux juifs l'un riche et lautre pauvre"
   }
   \score {
+    \keepWithTag #'layout
     \new PianoStaff <<
       \new Staff = "up" {
         \global
@@ -280,8 +289,33 @@ global = {
     >>
     \layout {
     }
-    \midi {
-      \tempo 4 = 40
+  }
+}
+
+% MIDI output only
+\score {
+  \keepWithTag #'midi
+  \new PianoStaff <<
+    \new Staff = "up" {
+      \global
+      \highVoice 
+     }
+    \new Staff = "down" {
+      \clef bass
+      \global
+      <<
+        \new Voice { 
+          \voiceThree   
+          \lowerMiddle 
+        }
+        \new Voice { 
+          \voiceFour 
+          \lowVoice 
+        }
+      >>
     }
+  >>
+  \midi {
+    \tempo 4 = 46
   }
 }
